@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile | Community Help</title>
+    
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f1f8e9;
+        margin: 0;
+        padding: 0;
+        color: #000;
+        text-align: center;
+      }
+
+      nav {
+        background: #2e7d32;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        align-items: center;
+        position: relative;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      nav a:hover {
+        color: #a5d6a7;
+      }
+
+      button.signout-btn {
+        position: absolute;
+        right: 20px;
+        background: #2e7d32;
+        border: none;
+        color: white;
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
+
+      button.signout-btn:hover {
+        background: #388e3c;
+      }
+
+      h1 {
+        color: #2e7d32;
+        margin: 20px 0;
+      }
+
+      .profile-card {
+        background: white;
+        width: 350px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        text-align: center;
+      }
+
+      input {
+        width: 90%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+      }
+
+      button {
+        background: #388e3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s ease;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background: #2e7d32;
+      }
+
+      .summary, .no-history {
+        background: white;
+        padding: 15px;
+        margin: 15px auto;
+        border-radius: 10px;
+        width: 60%;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        text-align: center;
+        border: 1px solid #ccc;
+        color: #000;
+      }
+
+      table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 90%;
+        text-align: center;
+      }
+
+      th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background: #388e3c;
+        color: white;
+      }
+
+      .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .delete-btn:hover {
+        background-color: #e60000;
+      }
+
+      .delete-all-btn {
+        background-color: #9f728f;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .delete-all-btn:hover {
+        background-color: #7a5270;
+      }
+
+      .reset-summary-btn {
+        background-color: #ff9800;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .reset-summary-btn:hover {
+        background-color: #e68900;
+      }
+    </style>
+  </head>
+  
+  <body>
+
+    <nav>
+      <a href="about.html">About</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="donate.html">Donate</a>
+      <a href="profile.html">Profile</a>
+      
+      <button class="signout-btn" onclick="signOut()">Sign Out</button>
+
+    </nav>
+
+    <h1>Your Profile</h1>
+
+    <div class="profile-card">
+  
+      <h3>Profile Information</h3>
+      
+      <input type="text" id="userName" placeholder="Your Name">
+      <input type="email" id="userEmail" placeholder="Email Address" readonly>
+      <input type="text" id="userAddress" placeholder="Address">
+      <button onclick="saveProfile()">Save Changes</button>
+
+    </div>
+
+    <h3>Your Donation Summary</h3>
+    
+    <div id="donationSummary" class="summary"></div>
+  
+    <button class="reset-summary-btn" onclick="resetSummary()">Reset Summary</button>
+
+
+    <h3>Your Donation History</h3>
+
+    <div id="donationSection" class="summary"> </div>
+
+    <script>
+    
+      let currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+      // Create profile if not existing
+      if (!currentUser.email) {
+        currentUser.email = prompt("Enter your email to create your profile:");
+        currentUser.name = "";
+        currentUser.address = "";
+        currentUser.password = "";
+        localStorage.setItem("user", JSON.stringify(currentUser));
+      }
+
+      document.getElementById("userName").value = currentUser.name || "";
+      document.getElementById("userEmail").value = currentUser.email;
+      document.getElementById("userAddress").value = currentUser.address || "";
+
+      function saveProfile() {
+        currentUser.name = document.getElementById("userName").value;
+        currentUser.address = document.getElementById("userAddress").value;
+        localStorage.setItem("user", JSON.stringify(currentUser));
+        alert("Profile updated successfully!");
+      }
+
+      function signOut() {
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
+      }
+
+      // Load donations
+      
+      let allDonations = JSON.parse(localStorage.getItem("donations") || "[]");
+
+      function renderSummary() {
+
+        const userDonations = allDonations.filter(d => d.email === currentUser.email);
+        const totalCount = userDonations.length;
+        let totalFunds = 0;
+        
+        userDonations.forEach(d => {
+          if (d.type === "Funds" && d.amount) totalFunds += parseFloat(d.amount);
+        });
+
+        const summaryDiv = document.getElementById("donationSummary");
+
+        summaryDiv.innerHTML = `
+          <p><b>Total Donations Made:</b> ${totalCount}</p>
+          <p><b>Total Fund Donations:</b> ₱${totalFunds.toFixed(2)}</p>
+        `;
+      }
+
+      function renderDonations() {
+        const userDonations = allDonations.filter(d => d.email === currentUser.email);
+        const donationSection = document.getElementById("donationSection");
+
+        if (userDonations.length === 0) {
+          donationSection.innerHTML = `<div class="no-history"><strong>No donation history.</strong></div>`;
+          return;
+        }
+
+        let tableHTML = `<table>
+          <thead>
+            <tr>
+              <th>Foundation</th>
+              <th>Type</th>
+              <th>Details</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        <tbody>`;
+
+        userDonations.forEach((d, index) => {
+          
+          let details = "";
+
+            if (d.type === "Funds") details = `Amount: ₱${d.amount} | Payment: ${d.payment}`;
+            if (d.type === "Clothes") details = `Item: ${d.clothesType} | Qty: ${d.qty}`;
+            if (d.type === "Food") details = `Item: ${d.foodType} | Qty: ${d.qty}`;
+            if (d.type === "Other") details = `Items: ${d.items} | Qty: ${d.qty}`;
+
+          tableHTML += `<tr>
+            
+            <td>${d.foundation}</td>
+            <td>${d.type}</td>
+            <td>${details}</td>
+            <td>${d.date}</td>
+            <td><button class="delete-btn" onclick="deleteDonation(${index})">Delete</button></td>
+          </tr>`;
+        });
+
+        tableHTML += `</tbody></table> <button class="delete-all-btn" onclick="deleteAllDonations()">Delete All History</button>`;
+  
+        donationSection.innerHTML = tableHTML;
+
+      }
+
+      function deleteDonation(index) {
+      
+        if (confirm("Are you sure you want to delete this donation record?")) {
+          const userEmail = currentUser.email;
+          let userDonations = allDonations.filter(d => d.email === userEmail);
+          let donationToDelete = userDonations[index];
+
+          const globalIndex = allDonations.findIndex(d => d.email === userEmail && d.date === donationToDelete.date && d.foundation === donationToDelete.foundation && d.type === donationToDelete.type);
+          if (globalIndex > -1) allDonations.splice(globalIndex, 1);
+          localStorage.setItem("donations", JSON.stringify(allDonations));
+          renderDonations(); // update table only
+          // summary remains unchanged
+      }}
+
+      function deleteAllDonations() {
+        if (confirm("Are you sure you want to delete ALL donation history?")) {
+        allDonations = allDonations.filter(d => d.email !== currentUser.email);
+        localStorage.setItem("donations", JSON.stringify(allDonations));
+        renderDonations(); // table cleared
+        // summary remains intact
+      }}
+
+      function resetSummary() {
+        if (confirm("Do you want to reset your donation summary? This will NOT affect your donation history.")) {
+          const summaryDiv = document.getElementById("donationSummary");
+          summaryDiv.innerHTML = `<p><b>Total Donations Made:</b> 0</p><p><b>Total Fund Donations:</b> ₱0.00</p>`;
+        }
+      }
+
+      renderSummary();
+      renderDonations();
+      
+    </script>
+
+  </body>
+
+</html>

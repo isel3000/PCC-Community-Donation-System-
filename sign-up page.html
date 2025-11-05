@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+  
+    <meta charset="UTF-8">
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <title>Community Help Donation System</title>
+
+    <style>
+  
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(to bottom right, #f8f9fa, #e8f5e9);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 420px;
+        background: #ffffff;
+        padding: 30px 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        text-align: center;
+      }
+
+      .logo {
+        width: 80px;
+        margin-bottom: 10px;
+      }
+
+      h1 {
+        font-size: 22px;
+        color: #2e7d32;
+        margin: 0 0 15px 0;
+      }
+
+      h3 {
+        color: #388e3c;
+        font-size: 18px;
+        margin: 10px 0 15px 0;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px 12px;
+        margin: 6px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: 0.2s;
+      }
+
+      input:focus {
+        border-color: #66bb6a;
+        box-shadow: 0 0 4px rgba(102, 187, 106, 0.3);
+      }
+
+      button {
+        width: 100%;
+        padding: 11px;
+        margin-top: 10px;
+        background: #43a047;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #2e7d32;
+      }
+
+      p {
+        font-size: 13px;
+        color: #444;
+        margin-top: 12px;
+      }
+
+      a {
+        color: #2e7d32;
+        font-weight: 500;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <img src="c:\Users\Izzy\Downloads\lg1-removebg-preview.png" alt="Community Logo" class="logo">
+
+      <h1>Community Help Donation System</h1>
+
+      <!-- Sign In-->
+      <form id="signInForm" onsubmit="signIn(event)">
+
+        <h3>Sign In</h3>
+        
+        <input type="email" id="signInEmail" placeholder="Enter your email" required 
+
+        pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+
+        title="Please enter a valid Gmail address (e.g. example@gmail.com)" >
+
+        <input type="password" id="signInPassword" placeholder="Enter your password" required>
+
+        <button type="submit">Sign In</button>
+
+        <p>Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a> </p>
+
+      </form>
+
+      <!-- Sign Up Form -->
+
+      <form id="signUpForm" class="hidden" onsubmit="signUp(event)">
+
+        <h3>Create an Account</h3>
+        
+        <input type="text" id="signUpName" placeholder="Full Name" required>
+    
+        <input type="email" id="signUpEmail" 
+          placeholder="Enter your email (e.g. example@gmail.com)" required 
+
+          pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
+          
+          title="Please enter a valid Gmail address (e.g. example@gmail.com)"
+        >
+    
+        <input type="password" id="signUpPassword" 
+        
+        placeholder="Password (min 8 chars & 1 special char)" required 
+          
+        pattern="^(?=.*[!@#$%^&*(),.?\:{}|]).{8,}$"
+          
+        title="Password must be at least 8 characters long and include one special character (e.g. !, @, #, $)">
+    
+        <button type="submit">Sign Up</button>
+        
+        <p>Already have an account? <a href="#" onclick="toggleForms()">Sign In</a></p>
+      </form>
+
+    </div>
+
+    <script>
+
+      function toggleForms() {  
+        document.getElementById("signInForm").classList.toggle("hidden");
+        document.getElementById("signUpForm").classList.toggle("hidden");
+      }
+
+      function signUp(event) {
+        event.preventDefault();
+        const name = document.getElementById("signUpName").value.trim();
+        const email = document.getElementById("signUpEmail").value.trim();
+        const password = document.getElementById("signUpPassword").value.trim();
+
+        const users = JSON.parse(localStorage.getItem("users") || "[]");
+  
+        if (users.some(u => u.email === email)) {
+          alert("⚠️ This Gmail is already registered. Please sign in instead.");
+          return;
+        }
+
+        users.push({ name, email, password });
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("✅ Account created successfully! You can now sign in.");
+        toggleForms();
+      }
+
+      function signIn(event) {
+        event.preventDefault();
+        const email = document.getElementById("signInEmail").value.trim();
+        const password = document.getElementById("signInPassword").value.trim();
+
+        const users = JSON.parse(localStorage.getItem("users") || "[]");
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (!user) {
+          alert("❌ Incorrect Gmail or password. Please try again or sign up.");
+          return;
+        }
+
+        localStorage.setItem("user", JSON.stringify(user));
+        alert("👋 Welcome back, " + user.name + "!");
+        window.location.href = "about.html";
+      }
+
+    </script>
+
+  </body>
+  
+</html>

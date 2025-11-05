@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Foundations | Community Help</title>
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f1f8e9; /* light green background */
+        margin: 0;
+        padding: 0;
+      }
+      
+      nav {
+        background: #2e7d32; /* dark green header */
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        align-items: center;
+      }
+      
+      nav a {
+        color: white; /* white nav text */
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+      
+      .container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: white; /* container background */
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+
+      h1 {
+        color: #2e7d32; /* dark green heading */
+        text-align: center;
+      }
+
+      .foundation {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+
+      .foundation img {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      button {
+        background: #388e3c; /* green button */
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #2e7d32; /* dark green hover same as nav */
+      }
+
+    </style>
+  
+  </head>
+
+  <body>
+
+    <nav>
+      <a href="about.html">About</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="donate.html">Donate</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+
+    <div class="container">
+      <h1>Partner Foundations</h1>
+
+      <div class="foundation">
+        <img src="c:\Users\Izzy\AppData\Local\Temp\95eb2088-7fdf-427c-9a51-e1f0cd55fc81_logo.zip.c81\1.png" alt="Red Cross PH">
+        <h2>Red Cross PH</h2>
+        <p>Focused on disaster response, health services, and blood donation drives across the Philippines. Your donations go directly to supporting relief operations and saving lives.</p>
+        <button onclick="donateTo('Red Cross PH')">Donate Now</button>
+      </div>
+
+      <div class="foundation">
+        <img src="c:\Users\Izzy\AppData\Local\Temp\3dcab5d0-15ed-48ce-be30-e1553a44ce02_logo.zip.e02\2.png" alt="GMA Kapuso Foundation">
+        <h2>GMA Kapuso Foundation</h2>
+        <p>A trusted charitable organization providing education, health, and disaster relief programs. Your contributions bring hope to many Filipino families in need.</p>
+        <button onclick="donateTo('GMA Kapuso Foundation')">Donate Now</button>
+      </div>
+
+      <div class="foundation">
+        <img src="c:\Users\Izzy\AppData\Local\Temp\c84a89c5-d2e0-4abb-b406-890ff816c97d_logo.zip.97d\3.png" alt="Tzu Chi Foundation">
+        <h2>Tzu Chi Foundation</h2>
+        <p>International humanitarian organization promoting compassion and sustainable living through relief, education, and medical aid projects.</p>
+        <button onclick="donateTo('Tzu Chi Foundation')">Donate Now</button>
+      </div>
+
+      <div class="foundation">
+        <img src="c:\Users\Izzy\AppData\Local\Temp\a9be3407-8d5a-4ced-b552-aaf5f0a25e74_logo.zip.e74\4.png" alt="Caritas Manila">
+        <h2>Caritas Manila</h2>
+        <p>The social arm of the Catholic Church focused on poverty reduction, scholarship programs, and emergency relief for underprivileged communities.</p>
+        <button onclick="donateTo('Caritas Manila')">Donate Now</button>
+      </div>
+
+    </div>
+
+    <script>
+
+      function donateTo(foundationName) {
+        // Save selected foundation in localStorage
+        localStorage.setItem("selectedFoundation", foundationName);
+
+        // Redirect to donation page smoothly
+        window.location.href = "donate.html";
+      }
+
+    </script>
+
+  </body>
+
+</html>

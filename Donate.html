@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Donate | Community Help</title>
+    
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f1f8e9; /* light green background */
+        margin: 0;
+        padding: 0;
+        color: #000; /* default paragraph color */
+      }
+
+      nav {
+        background: #2e7d32; /* dark green header */
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        align-items: center;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      nav a:hover {
+        color: #a5d6a7; /* light green hover */
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 30px auto;
+        background: white; /* container background */
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        text-align: center;
+      }
+
+      h1 {
+        color: #2e7d32; /* dark green heading */
+        margin-bottom: 20px;
+      }
+
+      fieldset {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      legend {
+        font-weight: bold;
+        color: #2e7d32; /* dark green legend */
+      }
+
+      label {
+        display: block;
+        margin-top: 8px;
+      }
+
+      input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #000;
+      }
+
+      textarea {
+        resize: none;
+        height: 80px;
+      }
+
+      button {
+        background: #388e3c; /* green button */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s ease;
+        margin-top: 15px;
+      }
+
+      button:hover {
+        background: #2e7d32; /* dark green hover */
+      }
+
+      .notice {
+        background: #f1f8e9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        color: #000;
+      }
+
+      .hidden { 
+        display: none; 
+      }
+
+      input:required:invalid, select:required:invalid {
+        border-color: #2e7d32;
+        background: #e8f5e9;
+        }
+
+      #confirmationMessage {
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      .view-donations {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .view-donations a {
+        color: #2e7d32;
+        text-decoration: underline;
+      }
+    </style>
+
+  </head>
+  
+  <body>
+
+    <nav>
+      <a href="about.html">About</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="donate.html">Donate</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+
+    <div class="container">
+      
+      <h1>Make a Donation</h1>
+    
+      <form id="donationForm">
+
+        <!-- Foundations -->
+
+        <fieldset>
+          <legend>Choose a Foundation</legend>
+
+          <select id="foundation" required>
+            <option value="">-- Select Foundation --</option>
+            <option value="Red Cross PH">Red Cross PH</option>
+            <option value="GMA Kapuso Foundation">GMA Kapuso Foundation</option>
+            <option value="Tzu Chi Foundation">Tzu Chi Foundation</option>
+            <option value="Caritas Manila">Caritas Manila</option>
+          </select>
+
+        </fieldset>
+
+        <!-- Donation Checkbox-->
+        
+        <fieldset>
+
+          <legend>Donation Type</legend>
+          <label><input type="checkbox" id="fundsCheck"> Funds (Money)</label>
+          <label><input type="checkbox" id="clothesCheck"> Clothes</label>
+          <label><input type="checkbox" id="foodCheck"> Food</label>
+          <label><input type="checkbox" id="otherCheck"> Other Necessities</label>
+
+        </fieldset>
+
+        <!-- Funds Select -->
+        
+        <fieldset id="fundsSection" class="hidden">
+          
+          <legend>Funds Donation</legend>
+          <label>Amount (₱):</label>
+          <input type="number" id="amount" min="1" placeholder="Enter amount">
+          
+          <label>Payment Option:</label>
+
+          <select id="payment">
+            <option value="">-- Select Payment Option --</option>
+            <option value="GCash">GCash</option>
+            <option value="PayMaya">PayMaya</option>
+            <option value="Debit/Credit Card">Debit/Credit Card</option>
+          </select>
+
+        </fieldset>
+
+        <!-- Clothes Selection -->
+        
+        <fieldset id="clothesSection" class="hidden">
+          <legend>Clothes Donation</legend>
+          <label>Type of Clothes:</label>
+          
+          <select id="clothesType">
+            <option value="">-- Select Type --</option>
+            <option>T-Shirts</option>
+            <option>Pants</option>
+            <option>Jackets</option>
+            <option>Shorts</option>
+            <option>Dresses</option>
+            <option>Shoes</option>
+            <option>Bags</option>
+          </select>
+
+          <label>Quantity:</label>
+          <input type="number" id="clothesQty" min="1" placeholder="Enter quantity">
+          <label>How will you donate?</label>
+          
+          <select id="clothesDelivery" onchange="showClothesDeliveryOption()">
+            <option value="">-- Select Option --</option>
+            <option value="dropoff">Drop off at nearest center</option>
+            <option value="carrier">Send through carrier</option>
+          </select>
+
+          <div id="clothesDropoff" class="hidden">
+
+            <label>Nearest Donation Centers:</label>
+            
+            <select>
+              <option>Pasig City Donation Center</option>
+              <option>Makati Donation Hub</option>
+              <option>Quezon City Relief Center</option>
+            </select>
+
+          </div>
+
+          <div id="clothesCarrier" class="hidden">
+
+            <label>Choose Center to Send:</label>
+
+            <select>
+              <option>Red Cross PH - Mandaluyong Branch</option>
+              <option>Caritas Manila - Pandacan Branch</option>
+            </select>
+            
+            <p><strong>Carrier Info:</strong> J&T Express, LBC, Ninja Van available.</p>
+
+          </div>
+
+        </fieldset>
+
+        <!-- Food Selection -->
+        
+        <fieldset id="foodSection" class="hidden">
+          <legend>Food Donation</legend>
+          
+          <div class="notice">
+            ⚠️ You can only donate non-perishable food like canned goods, noodles, or bottled water.
+          </div>
+
+          <label>Type of Food:</label>
+
+          <select id="foodType">
+            <option value="">-- Select Food Type --</option>
+            <option>Canned Goods</option>
+            <option>Noodles</option>
+            <option>Bottled Water</option>
+            <option>Biscuits</option>
+            <option>Rice</option>
+            <option>Instant Coffee</option>
+          </select>
+
+          <label>Quantity:</label>
+          
+          <input type="number" id="foodQty" min="1" placeholder="Enter quantity">
+          
+          <label>How will you donate?</label>
+          
+          <select id="foodDelivery" onchange="showFoodDeliveryOption()">
+            <option value="">-- Select Option --</option>
+            <option value="dropoff">Drop off at nearest center</option>
+            <option value="carrier">Send through carrier</option>
+          </select>
+
+          <div id="foodDropoff" class="hidden">
+            <label>Nearest Donation Centers:</label>
+            
+            <select>
+              <option>Pasig City Donation Center</option>
+              <option>Makati Donation Hub</option>
+              <option>Quezon City Relief Center</option>
+            </select>
+
+          </div>
+
+          <div id="foodCarrier" class="hidden">
+            <label>Choose Center to Send:</label>
+            
+            <select>
+              <option>Red Cross PH - Mandaluyong Branch</option>
+              <option>Caritas Manila - Pandacan Branch</option>
+            </select>
+
+            <p><strong>Carrier Info:</strong> J&T Express, LBC, Ninja Van available.</p>
+          </div>
+
+        </fieldset>
+
+        <!-- Other Donations Section -->
+        
+        <fieldset id="otherSection" class="hidden">
+        
+          <legend>Other Donations</legend>
+        
+          <div class="notice">
+            💡 You may donate toys, hygiene kits, raincoats, blankets, or other useful items for relief operations.
+          </div>
+          
+          <label>Specify Items You Want to Donate:</label>
+        
+          <textarea id="otherItems" placeholder="e.g., Toys, Raincoats, Blankets, Hygiene Kits..."></textarea>
+          
+          <label>Quantity:</label>
+          
+          <input type="number" id="otherQty" min="1" placeholder="Enter quantity">
+
+        </fieldset>
+
+        <button type="button" onclick="submitDonation()">Submit Donation</button>
+
+        <p id="confirmationMessage" class="notice hidden"></p>
+      
+      </form>
+
+      <p class="view-donations">
+        <a href="profile.html" style="color:#ff5c8a; text-decoration:underline;">View My Donations</a>
+      </p>
+
+    </div>
+
+    <script>
+
+      const fundsCheck = document.getElementById('fundsCheck');
+      const clothesCheck = document.getElementById('clothesCheck');
+      const foodCheck = document.getElementById('foodCheck');
+      const otherCheck = document.getElementById('otherCheck');
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const savedFoundation = localStorage.getItem('selectedFoundation');
+
+        if (savedFoundation) {
+          document.getElementById('foundation').value = savedFoundation;
+          localStorage.removeItem('selectedFoundation');
+        }
+      });
+
+      fundsCheck.addEventListener('change', () => toggleSection('fundsSection', fundsCheck.checked));
+      clothesCheck.addEventListener('change', () => toggleSection('clothesSection', clothesCheck.checked));
+      foodCheck.addEventListener('change', () => toggleSection('foodSection', foodCheck.checked));
+      otherCheck.addEventListener('change', () => toggleSection('otherSection', otherCheck.checked));
+
+
+      function toggleSection(id, show) {
+
+        const section = document.getElementById(id);
+        section.classList.toggle('hidden', !show);
+
+        if (!show) {
+          section.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
+        }
+      }
+
+      function showClothesDeliveryOption() {
+        const val = document.getElementById('clothesDelivery').value;
+        
+        document.getElementById('clothesDropoff').classList.add('hidden');
+        document.getElementById('clothesCarrier').classList.add('hidden');
+
+        if (val === 'dropoff') document.getElementById('clothesDropoff').classList.remove('hidden');
+        
+        if (val === 'carrier') document.getElementById('clothesCarrier').classList.remove('hidden');
+      }
+
+      function showFoodDeliveryOption() {
+        const val = document.getElementById('foodDelivery').value;
+        document.getElementById('foodDropoff').classList.add('hidden');
+        document.getElementById('foodCarrier').classList.add('hidden');
+        if (val === 'dropoff') document.getElementById('foodDropoff').classList.remove('hidden');
+        if (val === 'carrier') document.getElementById('foodCarrier').classList.remove('hidden');
+      }
+
+      function submitDonation() {
+        const foundation = document.getElementById('foundation').value;
+        if (!foundation) return alert('Please select a foundation.');
+
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        if (!user.email) return alert('Please sign in first.');
+
+        let donations = JSON.parse(localStorage.getItem('donations') || '[]');
+        const date = new Date().toLocaleString();
+
+        if (fundsCheck.checked) {
+          const amount = parseFloat(document.getElementById('amount').value || 0);
+          const payment = document.getElementById('payment').value;
+          if (!amount || !payment) return alert('Complete funds donation details.');
+          donations.push({ email: user.email, type: "Funds", foundation, amount, payment, date });
+        }
+
+        if (clothesCheck.checked) {
+          const type = document.getElementById('clothesType').value;
+          const qty = document.getElementById('clothesQty').value;
+          if (!type || !qty) return alert('Complete clothes donation details.');
+          donations.push({ email: user.email, type: "Clothes", foundation, clothesType: type, qty, date });
+        }
+
+        if (foodCheck.checked) {
+          const type = document.getElementById('foodType').value;
+          const qty = document.getElementById('foodQty').value;
+          if (!type || !qty) return alert('Complete food donation details.');
+          donations.push({ email: user.email, type: "Food", foundation, foodType: type, qty, date });
+        }
+
+        if (otherCheck.checked) {
+          const items = document.getElementById('otherItems').value.trim();
+          const qty = document.getElementById('otherQty').value;
+          if (!items || !qty) return alert('Please specify your other donation items.');
+          donations.push({ email: user.email, type: "Other", foundation, items, qty, date });
+        }
+
+        localStorage.setItem('donations', JSON.stringify(donations));
+
+        const message = document.getElementById('confirmationMessage');
+        message.classList.remove('hidden');
+        message.textContent = '🎉 Thank you for your donation!';
+        setTimeout(() => message.classList.add('hidden'), 4000);
+
+        document.getElementById('donationForm').reset();
+        document.querySelectorAll('.hidden').forEach(e => e.classList.add('hidden'));
+      }
+
+    </script>
+
+  </body>
+
+</html>
